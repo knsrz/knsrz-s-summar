@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1589618094 source:d:\c加加\实验一\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+
