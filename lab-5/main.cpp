@@ -85,8 +85,98 @@ bool CreateUDG(ALGraph &G){
     }
     return true;
 }
+//-------------DFS
+//邻接矩阵DFS
+void DFS_AM(AMGraph G,int v,bool visited[])//从第v个顶点出发深度优先
+{
+    cout<<v;visited[v]=true;//访问第v个节点，并标记
+    for(int k=0;k<G.vexnum;k++){
+        if((G.arcs[v][k]!=MAXINT)&&!visited[k])DFS_AM(G,k,visited);
+    }
+}
+//------------BFS
+//邻接矩阵BFS
+//先定义队列
+#define MAXSIZE  50//队列最大长度
+typedef struct
+{
+    int *base;//存储空间的基地址
+    int front;//头指针
+    int rear;//尾指针
+}SqQueue;
 
+//初始化
+bool InitQueue(SqQueue &q){
+    q.base=new int[MAXSIZE];//申请空间
+    if(!q.base)return false;//申请失败
+    q.front=q.rear=0;//队列空 头尾指针置零
+    return true;
+}
+//入队
+bool InQueue(SqQueue &q,int e){
+
+    if((q.rear+1)%MAXSIZE==q.front)return false;//队满
+    q.base[q.rear]=e;//将e入队
+    q.rear=(q.rear+1)%MAXSIZE;//尾指针移动
+    return true;
+}
+
+//出队
+bool OutQueue(SqQueue &q,int &m){
+
+    if(q.rear==q.front)return false;//队空
+    m=q.base[q.front];//将m传给参数带出
+    q.front=(q.front+1)%MAXSIZE;//头指针改变
+    return true;
+}
+int FirstAdjVex(AMGraph G,int u)//查找和u相连的第一个邻接点序号
+{
+    for (int i = 0; i <G.vexnum ; ++i) {
+        if(G.arcs[u][i]!=MAXINT)return i;
+    }
+    return -1;//未找到
+}
+int NextAdjVex(AMGraph G,int u,int w)//查找和u相连的 在u后的顶点序号
+{
+    for (int i = w+1; i <G.vexnum ; ++i) {
+        if(G.arcs[u][i]!=MAXINT)return i;
+    }
+    return -1;//未找到
+}
+void BFS_AM(AMGraph G,int v,bool visited[],SqQueue Q)
+{
+   cout<<v;visited[v]=true;//访问第v个顶点，并标记
+   InitQueue(Q);//初始化队列
+    InQueue(Q,v);//v入队
+    while (!(Q.rear==Q.front))//队不空
+    {
+     int u;
+        OutQueue(Q,u);  //队头元素出队，赋给u
+        for(int w=FirstAdjVex(G,u);w>=0;w=NextAdjVex(G,u,w))
+            if(!visited[w])
+            {
+                cout<<w;visited[w]=true;
+                InQueue(Q,w);
+            }
+    }
+}
+//------------迪杰斯特拉最短路径
+void ShortesPath_DIJ(AMGraph G,int v0)//求v0到其余各点的最短路径
+{
+
+}
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+
+    AMGraph G;
+    CreateUDN(G);
+    bool visited[G.vexnum];
+    for(int i=0;i<G.vexnum;i++)visited[i]=false;
+    SqQueue Q;
+    cout<<"DFS"<<endl;
+    DFS_AM(G,0,visited);
+    cout<<"BFS"<<endl;
+    BFS_AM(G,0,visited,Q);
+
+
     return 0;
 }
