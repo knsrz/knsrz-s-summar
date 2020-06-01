@@ -1,49 +1,52 @@
 #include <iostream>
 using namespace std;
-//---------------------------å›¾çš„é‚»æ¥çŸ©é˜µå­˜å‚¨ç»“æ„
-#define MAXINT 32767  //æå¤§å€¼
-#define MVNUM 100     //æœ€å¤§é¡¶ç‚¹æ•°
+//---------------------------Í¼µÄÁÚ½Ó¾ØÕó´æ´¢½á¹¹
+#define MAXINT 32767  //¼«´óÖµ
+#define MVNUM 100     //×î´ó¶¥µãÊı
 typedef struct
 {
-    char vexs[MVNUM];     //é¡¶ç‚¹è¡¨
-    int arcs[MVNUM][MVNUM]; //é‚»æ¥çŸ©é˜µ
-    int vexnum,arcnum;     //å›¾çš„å½“å‰ç‚¹æ•°å’Œè¾¹æ•°
+    char vexs[MVNUM];     //¶¥µã±í
+    int arcs[MVNUM][MVNUM]; //ÁÚ½Ó¾ØÕó
+    int vexnum,arcnum;     //Í¼µÄµ±Ç°µãÊıºÍ±ßÊı
 }AMGraph;
-//ç”¨é‚»æ¥çŸ©é˜µåˆ›å»ºæ— å‘ç½‘
-int Location(AMGraph G, char v){//è·å–vå¯¹åº”ä¸‹æ ‡å‡½æ•°
+//ÓÃÁÚ½Ó¾ØÕó´´½¨ÎŞÏòÍø
+int Location(AMGraph G, char v){//»ñÈ¡v¶ÔÓ¦ÏÂ±êº¯Êı
     for(int i=0;i<G.vexnum;i++){
         if(G.vexs[i]==v)return i;
     }
-    return -1;         //æœªæ‰¾åˆ° è¿”å›-1
+    return -1;         //Î´ÕÒµ½ ·µ»Ø-1
 }
 bool CreateUDN(AMGraph &G){
-    cin>>G.vexnum>>G.arcnum;      //è¾“å…¥æ€»é¡¶ç‚¹æ•°ï¼Œæ€»è¾¹æ•°
+    cout<<"ÊäÈë¶¥µãÊıºÍ±ßÊı"<<endl;
+    cin>>G.vexnum>>G.arcnum;      //ÊäÈë×Ü¶¥µãÊı£¬×Ü±ßÊı
+    cout<<"ÊäÈë¶¥µãµÄĞÅÏ¢"<<endl;
     for(int i=0;i<G.vexnum;i++){
-        cin>>G.vexs[i];          //è¾“å…¥ç‚¹çš„ä¿¡æ¯
+        cin>>G.vexs[i];          //ÊäÈëµãµÄĞÅÏ¢
     }
 
     for(int i=0;i<G.vexnum;i++){
         for(int j=0;j<G.vexnum;j++){
-            G.arcs[i][j]=MAXINT;         //åˆå§‹åŒ–é‚»æ¥çŸ©é˜µï¼Œæ‰€æœ‰è¾¹è®¾ä¸ºæå¤§å€¼
+            G.arcs[i][j]=MAXINT;         //³õÊ¼»¯ÁÚ½Ó¾ØÕó£¬ËùÓĞ±ßÉèÎª¼«´óÖµ
         }
     }
     char v1,v2;
     int w;
     int i,j;
     for(int k=0;k<G.arcnum;k++){
-        cin>>v1>>v2>>w;     //ä¾æ¬¡è¾“å…¥ä¸€æ¡è¾¹å¯¹åº”çš„é¡¶ç‚¹å’Œæƒå€¼
-        i=Location(G,v1);j=Location(G,v2);   //ç¡®å®šv1å’Œv2çš„ä¸‹æ ‡
-        G.arcs[i][j]=G.arcs[j][i]=w;         //ç½®<v1,v2>å’Œ<v2,v1>ä¸ºæƒå€¼
+        cout<<"ÊäÈëÒ»Ìõ±ßÁ½¸ö¶¥µãºÍ¶ÔÓ¦È¨Öµ"<<endl;
+        cin>>v1>>v2>>w;     //ÒÀ´ÎÊäÈëÒ»Ìõ±ß¶ÔÓ¦µÄ¶¥µãºÍÈ¨Öµ
+        i=Location(G,v1);j=Location(G,v2);   //È·¶¨v1ºÍv2µÄÏÂ±ê
+        G.arcs[i][j]=G.arcs[j][i]=w;         //ÖÃ<v1,v2>ºÍ<v2,v1>ÎªÈ¨Öµ
     }
 }
 
 
-//-----------------------å›¾çš„é‚»æ¥è¡¨å­˜å‚¨ç»“æ„
-#define MVNUM  100           //æœ€å¤§é¡¶ç‚¹æ•°
-typedef struct ArcNode       //è¾¹èŠ‚ç‚¹
+//-----------------------Í¼µÄÁÚ½Ó±í´æ´¢½á¹¹
+#define MVNUM  100           //×î´ó¶¥µãÊı
+typedef struct ArcNode       //±ß½Úµã
 {
-   int adjvex;              //è¯¥è¾¹æŒ‡å‘çš„é¡¶ç‚¹ä½ç½®
-   struct ArcNode * next;   //æŒ‡å‘ä¸‹ä¸€æ¡è¾¹
+   int adjvex;              //¸Ã±ßÖ¸ÏòµÄ¶¥µãÎ»ÖÃ
+   struct ArcNode * next;   //Ö¸ÏòÏÂÒ»Ìõ±ß
 }ArcNode;
 typedef struct VNode
 {
@@ -54,104 +57,104 @@ typedef struct {
     AdjList vertices;
     int vexnum,arcnum;
 }ALGraph;
-//ç”¨é‚»æ¥è¡¨åˆ›å»ºæ— å‘å›¾
-int Location2(ALGraph G,char v){//æŸ¥æ‰¾ våœ¨Gä¸­çš„ä½ç½®
+//ÓÃÁÚ½Ó±í´´½¨ÎŞÏòÍ¼
+int Location2(ALGraph G,char v){//²éÕÒ vÔÚGÖĞµÄÎ»ÖÃ
     for (int i = 0; i < G.vexnum; ++i) {
         if(G.vertices[i].data==v)return i;
     }
-    return -1;//æœªæ‰¾åˆ°
+    return -1;//Î´ÕÒµ½
 }
 bool CreateUDG(ALGraph &G){
-    cin>>G.vexnum>>G.arcnum;//è¾“å…¥é¡¶ç‚¹æ•°ï¼Œè¾¹æ•°
-    for(int i=0;i<G.vexnum;i++){//è¾“å…¥å„ç‚¹ï¼Œæ„é€ è¡¨å¤´èŠ‚ç‚¹è¡¨
+    cin>>G.vexnum>>G.arcnum;//ÊäÈë¶¥µãÊı£¬±ßÊı
+    for(int i=0;i<G.vexnum;i++){//ÊäÈë¸÷µã£¬¹¹Ôì±íÍ·½Úµã±í
         cin>>G.vertices[i].data;
         G.vertices[i].firstarc=NULL;
     }
     char v1,v2;
     int i,j;
     ArcNode* p1,*p2;
-    for (int k = 0; k <G.arcnum ; ++k) {//æ„é€ å„è¾¹
-        cin>>v1>>v2;//è¾“å…¥ä¸€æ¡è¾¹ä¾é™„çš„ä¸¤ä¸ªèŠ‚ç‚¹
-        i=Location2(G,v1);j=Location2(G,v2);//ç¡®å®šv1 v2åœ¨Gä¸­çš„ä½ç½®
+    for (int k = 0; k <G.arcnum ; ++k) {//¹¹Ôì¸÷±ß
+        cin>>v1>>v2;//ÊäÈëÒ»Ìõ±ßÒÀ¸½µÄÁ½¸ö½Úµã
+        i=Location2(G,v1);j=Location2(G,v2);//È·¶¨v1 v2ÔÚGÖĞµÄÎ»ÖÃ
 
-        p1=new ArcNode;//ç”Ÿæˆæ–°è¾¹èŠ‚ç‚¹
-        p1->adjvex=j;//ä¸´æ¥ç‚¹åºå·ä¸ºj
-        p1->next=G.vertices[i].firstarc;G.vertices[i].firstarc=p1;//å°†æ–°èŠ‚ç‚¹æ’å…¥viçš„è¾¹è¡¨å¤´
+        p1=new ArcNode;//Éú³ÉĞÂ±ß½Úµã
+        p1->adjvex=j;//ÁÙ½ÓµãĞòºÅÎªj
+        p1->next=G.vertices[i].firstarc;G.vertices[i].firstarc=p1;//½«ĞÂ½Úµã²åÈëviµÄ±ß±íÍ·
 
-        p2=new ArcNode;//ç”Ÿæˆæ–°è¾¹èŠ‚ç‚¹
-        p2->adjvex=i;//ä¸´æ¥ç‚¹åºå·ä¸ºi
-        p2->next=G.vertices[j].firstarc;G.vertices[j].firstarc=p2;//å°†æ–°èŠ‚ç‚¹æ’å…¥vjçš„è¾¹è¡¨å¤´
+        p2=new ArcNode;//Éú³ÉĞÂ±ß½Úµã
+        p2->adjvex=i;//ÁÙ½ÓµãĞòºÅÎªi
+        p2->next=G.vertices[j].firstarc;G.vertices[j].firstarc=p2;//½«ĞÂ½Úµã²åÈëvjµÄ±ß±íÍ·
 
     }
     return true;
 }
 //-------------DFS
-//é‚»æ¥çŸ©é˜µDFS
-void DFS_AM(AMGraph G,int v,bool visited[])//ä»ç¬¬vä¸ªé¡¶ç‚¹å‡ºå‘æ·±åº¦ä¼˜å…ˆ
+//ÁÚ½Ó¾ØÕóDFS
+void DFS_AM(AMGraph G,int v,bool visited[])//´ÓµÚv¸ö¶¥µã³ö·¢Éî¶ÈÓÅÏÈ
 {
-    cout<<v;visited[v]=true;//è®¿é—®ç¬¬vä¸ªèŠ‚ç‚¹ï¼Œå¹¶æ ‡è®°
+    cout<<v;visited[v]=true;//·ÃÎÊµÚv¸ö½Úµã£¬²¢±ê¼Ç
     for(int k=0;k<G.vexnum;k++){
         if((G.arcs[v][k]!=MAXINT)&&!visited[k])DFS_AM(G,k,visited);
     }
 }
 //------------BFS
-//é‚»æ¥çŸ©é˜µBFS
-//å…ˆå®šä¹‰é˜Ÿåˆ—
-#define MAXSIZE  50//é˜Ÿåˆ—æœ€å¤§é•¿åº¦
+//ÁÚ½Ó¾ØÕóBFS
+//ÏÈ¶¨Òå¶ÓÁĞ
+#define MAXSIZE  50//¶ÓÁĞ×î´ó³¤¶È
 typedef struct
 {
-    int *base;//å­˜å‚¨ç©ºé—´çš„åŸºåœ°å€
-    int front;//å¤´æŒ‡é’ˆ
-    int rear;//å°¾æŒ‡é’ˆ
+    int *base;//´æ´¢¿Õ¼äµÄ»ùµØÖ·
+    int front;//Í·Ö¸Õë
+    int rear;//Î²Ö¸Õë
 }SqQueue;
 
-//åˆå§‹åŒ–
+//³õÊ¼»¯
 bool InitQueue(SqQueue &q){
-    q.base=new int[MAXSIZE];//ç”³è¯·ç©ºé—´
-    if(!q.base)return false;//ç”³è¯·å¤±è´¥
-    q.front=q.rear=0;//é˜Ÿåˆ—ç©º å¤´å°¾æŒ‡é’ˆç½®é›¶
+    q.base=new int[MAXSIZE];//ÉêÇë¿Õ¼ä
+    if(!q.base)return false;//ÉêÇëÊ§°Ü
+    q.front=q.rear=0;//¶ÓÁĞ¿Õ Í·Î²Ö¸ÕëÖÃÁã
     return true;
 }
-//å…¥é˜Ÿ
+//Èë¶Ó
 bool InQueue(SqQueue &q,int e){
 
-    if((q.rear+1)%MAXSIZE==q.front)return false;//é˜Ÿæ»¡
-    q.base[q.rear]=e;//å°†eå…¥é˜Ÿ
-    q.rear=(q.rear+1)%MAXSIZE;//å°¾æŒ‡é’ˆç§»åŠ¨
+    if((q.rear+1)%MAXSIZE==q.front)return false;//¶ÓÂú
+    q.base[q.rear]=e;//½«eÈë¶Ó
+    q.rear=(q.rear+1)%MAXSIZE;//Î²Ö¸ÕëÒÆ¶¯
     return true;
 }
 
-//å‡ºé˜Ÿ
+//³ö¶Ó
 bool OutQueue(SqQueue &q,int &m){
 
-    if(q.rear==q.front)return false;//é˜Ÿç©º
-    m=q.base[q.front];//å°†mä¼ ç»™å‚æ•°å¸¦å‡º
-    q.front=(q.front+1)%MAXSIZE;//å¤´æŒ‡é’ˆæ”¹å˜
+    if(q.rear==q.front)return false;//¶Ó¿Õ
+    m=q.base[q.front];//½«m´«¸ø²ÎÊı´ø³ö
+    q.front=(q.front+1)%MAXSIZE;//Í·Ö¸Õë¸Ä±ä
     return true;
 }
-int FirstAdjVex(AMGraph G,int u)//æŸ¥æ‰¾å’Œuç›¸è¿çš„ç¬¬ä¸€ä¸ªé‚»æ¥ç‚¹åºå·
+int FirstAdjVex(AMGraph G,int u)//²éÕÒºÍuÏàÁ¬µÄµÚÒ»¸öÁÚ½ÓµãĞòºÅ
 {
     for (int i = 0; i <G.vexnum ; ++i) {
         if(G.arcs[u][i]!=MAXINT)return i;
     }
-    return -1;//æœªæ‰¾åˆ°
+    return -1;//Î´ÕÒµ½
 }
-int NextAdjVex(AMGraph G,int u,int w)//æŸ¥æ‰¾å’Œuç›¸è¿çš„ åœ¨uåçš„é¡¶ç‚¹åºå·
+int NextAdjVex(AMGraph G,int u,int w)//²éÕÒºÍuÏàÁ¬µÄ ÔÚuºóµÄ¶¥µãĞòºÅ
 {
     for (int i = w+1; i <G.vexnum ; ++i) {
         if(G.arcs[u][i]!=MAXINT)return i;
     }
-    return -1;//æœªæ‰¾åˆ°
+    return -1;//Î´ÕÒµ½
 }
 void BFS_AM(AMGraph G,int v,bool visited[],SqQueue Q)
 {
-   cout<<v;visited[v]=true;//è®¿é—®ç¬¬vä¸ªé¡¶ç‚¹ï¼Œå¹¶æ ‡è®°
-   InitQueue(Q);//åˆå§‹åŒ–é˜Ÿåˆ—
-    InQueue(Q,v);//vå…¥é˜Ÿ
-    while (!(Q.rear==Q.front))//é˜Ÿä¸ç©º
+   cout<<v;visited[v]=true;//·ÃÎÊµÚv¸ö¶¥µã£¬²¢±ê¼Ç
+   InitQueue(Q);//³õÊ¼»¯¶ÓÁĞ
+    InQueue(Q,v);//vÈë¶Ó
+    while (!(Q.rear==Q.front))//¶Ó²»¿Õ
     {
      int u;
-        OutQueue(Q,u);  //é˜Ÿå¤´å…ƒç´ å‡ºé˜Ÿï¼Œèµ‹ç»™u
+        OutQueue(Q,u);  //¶ÓÍ·ÔªËØ³ö¶Ó£¬¸³¸øu
         for(int w=FirstAdjVex(G,u);w>=0;w=NextAdjVex(G,u,w))
             if(!visited[w])
             {
@@ -160,9 +163,42 @@ void BFS_AM(AMGraph G,int v,bool visited[],SqQueue Q)
             }
     }
 }
-//------------è¿ªæ°æ–¯ç‰¹æ‹‰æœ€çŸ­è·¯å¾„
-void ShortesPath_DIJ(AMGraph G,int v0)//æ±‚v0åˆ°å…¶ä½™å„ç‚¹çš„æœ€çŸ­è·¯å¾„
+//------------µÏ½ÜË¹ÌØÀ­×î¶ÌÂ·¾¶
+void ShortesPath_DIJ(AMGraph G,int v0)//Çóv0µ½ÆäÓà¸÷µãµÄ×î¶ÌÂ·¾¶
 {
+
+    int n=G.vexnum;       //nÎªGÖĞ¶¥µã¸öÊı
+    bool S[n];
+    int D[n];
+    int Path[n];
+    for (int i = 0; i <n ; ++i) {
+        S[i]=false;
+        D[i]=G.arcs[v0][i];
+        if(D[v0]<MAXINT)Path[i]=v0;
+        else Path[i]=-1;
+    }
+    S[v0]=true;
+    D[v0]=0;
+    //-------------------
+    int v;
+    for (int i = 0; i <n ; ++i) {
+        int min=MAXINT;
+        for (int w = 0; w <n ; ++w) {
+            if(!S[w]&&D[w]<min){v=w;min=D[w];}
+        }
+        S[v]=true;
+        for (int w = 0; w <n ; ++w) {
+            if(!S[w]&&(D[v]+G.arcs[v][w])<D[w])
+            {
+                D[w]=D[v]+G.arcs[v][w];
+                Path[w]=v;
+            }
+        }
+    }
+
+    for (int j = 0; j < n; ++j) {
+        cout<<"µ½"<<G.vexs[j]<<"×î¶Ì"<<D[j]<<" ";
+    }
 
 }
 int main() {
@@ -174,9 +210,15 @@ int main() {
     SqQueue Q;
     cout<<"DFS"<<endl;
     DFS_AM(G,0,visited);
+
+    cout<<endl;
+    for(int i=0;i<G.vexnum;i++)visited[i]=false;
     cout<<"BFS"<<endl;
     BFS_AM(G,0,visited,Q);
 
+    cout<<endl;
+    cout<<"µÏ½ÜË¹ÌØÀ­"<<endl;
+    ShortesPath_DIJ(G,0);
 
     return 0;
 }
